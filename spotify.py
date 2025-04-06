@@ -5,7 +5,9 @@ import requests
 from pydantic import BaseModel, Field
 from typing import List
 import re, random
+from dotenv import load_dotenv
 
+load_dotenv()
 
 scope = ["user-top-read", "user-read-recently-played", "playlist-modify-public", "playlist-modify-private"]
 sp = spotipy.Spotify(auth_manager=SpotifyOAuth(scope=scope))

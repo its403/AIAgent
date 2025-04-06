@@ -4,6 +4,12 @@ An AI-powered music assistant that creates personalized Spotify playlists using 
 
 ## 🚀 Proof of Concept
 
+### Test run of the Agent
+
+![The San Juan Mountains are beautiful!](/img/testrun.png "San Juan Mountains")
+
+---
+
 ### 🔧 Setup Instructions
 
 1. **Create and activate a virtual environment**
@@ -12,20 +18,26 @@ An AI-powered music assistant that creates personalized Spotify playlists using 
     python3 -m venv .venv
     source .venv/bin/activate
     ```
+2. **Install Dependencies**
 
-2. **Create a `.env` file**
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+3. **Create a `.env` file**
 
     ```bash
     cp sample.env .env
     ```
 
-3. **Get the required API keys**
+4. **Get the required API keys**
 
     - [Groq API Key](https://console.groq.com/keys)
     - [Spotify API Key](https://developer.spotify.com/dashboard)
+        - Add "https://google.com/" as redirect URI
     - [LangSmith API Key](https://smith.langchain.com/)
 
-4. **Authorize Spotify access**
+5. **Authorize Spotify access**
 
     ```bash
     python spotify.py
@@ -40,7 +52,7 @@ An AI-powered music assistant that creates personalized Spotify playlists using 
     Spotify User ID: <Your User ID>
     ```
 
-5. **Run the main AI Agent**
+6. **Run the main AI Agent**
 
     ```bash
     python main.py
