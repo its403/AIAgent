@@ -6,7 +6,7 @@ An AI-powered music assistant that creates personalized Spotify playlists using 
 
 ### Test run of the Agent
 
-![The San Juan Mountains are beautiful!](/img/testrun.png "San Juan Mountains")
+![Test Image](/img/testrun.png "Image showing test run of the agent")
 
 ---
 
@@ -65,7 +65,7 @@ An AI-powered music assistant that creates personalized Spotify playlists using 
 - 🎵 Create new Spotify playlists
 - ➕ Add tracks to existing playlists
 - 📈 Fetch user's top tracks and add to playlists
-- 🤖 Get recommended tracks based on top tracks
+- 🤖 Get recommended tracks based on top tracks (Only basic recommendation right now using Reccobeats API)
 
 ---
 
