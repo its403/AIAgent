@@ -5,8 +5,10 @@ from langchain_core.messages import AIMessage, HumanMessage
 import logging
 from dotenv import load_dotenv
 from langgraph.checkpoint.memory import MemorySaver
-import uuid
 from langchain.agents import create_tool_calling_agent
+from fastapi import FastAPI, WebSocket, WebSocketDisconnect
+import uvicorn
+import json
 
 load_dotenv()
 
@@ -43,6 +45,9 @@ memory = MemorySaver()
 
 agent = create_react_agent(model=model_with_tools, tools=tools, prompt=prompt, checkpointer=memory) # debug=True for logs
 
+# ------------- Terminal Section -------------------------------------------------------------
+#-------------- Comment this part before running websocket part-------------------------------
+
 def run_chatbot():
 
     config = {"configurable": {"thread_id": "abc123"}}
@@ -77,3 +82,85 @@ def run_chatbot():
 
 if __name__ == "__main__":
     run_chatbot()
+
+# -------------- WebSocket Section -------------------
+
+# logging.basicConfig(level=logging.INFO, 
+#                     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+# logger = logging.getLogger(__name__)
+
+# app = FastAPI(title="MusicAI WebSocket API")
+
+# @app.websocket("/chat")
+# async def chat_endpoint(websocket: WebSocket):
+#     await websocket.accept()
+#     session_id = f"session_{id(websocket)}"
+#     logger.info(f"New WebSocket connection established: {session_id}")
+    
+#     config = {"configurable": {"thread_id": session_id}}
+    
+#     try:
+#         # Send welcome message
+#         welcome_message = {
+#             "type": "welcome",
+#             "content": "Connected to MusicAI! What kind of playlist would you like to create?"
+#         }
+#         await websocket.send_text(json.dumps(welcome_message))
+        
+#         # Main interaction loop
+#         while True:
+#             raw_data = await websocket.receive_text()
+#             logger.info(f"Received message from {session_id}: {raw_data}")
+            
+#             try:
+#                 data = json.loads(raw_data)
+#                 user_message = data.get("message", "")
+#             except json.JSONDecodeError:
+#                 user_message = raw_data
+            
+#             if user_message.lower() in ["quit", "exit", "disconnect"]:
+#                 goodbye_message = {
+#                     "type": "goodbye",
+#                     "content": "Goodbye! Enjoy your playlist!"
+#                 }
+#                 await websocket.send_text(json.dumps(goodbye_message))
+#                 break
+            
+#             logger.info(f"Invoking agent for {session_id}")
+#             response = await agent.ainvoke(
+#                 {
+#                     "messages": [
+#                         HumanMessage(content=user_message)
+#                     ]
+#                 },
+#                 config=config
+#             )
+            
+#             ai_message = response["messages"][-1].content
+#             response_data = {
+#                 "type": "response",
+#                 "content": ai_message
+#             }
+#             logger.info(f"Sending response to {session_id}")
+#             await websocket.send_text(json.dumps(response_data))
+            
+#     except WebSocketDisconnect:
+#         logger.info(f"WebSocket disconnected: {session_id}")
+#     except Exception as e:
+#         logger.error(f"Error in WebSocket connection {session_id}: {str(e)}", exc_info=True)
+#         error_message = {
+#             "type": "error",
+#             "content": f"An error occurred: {str(e)}"
+#         }
+#         try:
+#             await websocket.send_text(json.dumps(error_message))
+#         except:
+#             pass
+
+
+# @app.get("/")
+# def read_root():
+#     return {"status": "MusicAI is running", "websocket_endpoint": "/chat"}
+
+# if __name__ == "__main__":
+#     uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)

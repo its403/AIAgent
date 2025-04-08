@@ -12,12 +12,15 @@ An AI-powered music assistant that creates personalized Spotify playlists using 
 
 ### 🔧 Setup Instructions
 
+> **Requirements**: Tested with Python 3.12
+
 1. **Create and activate a virtual environment**
 
     ```bash
     python3 -m venv .venv
     source .venv/bin/activate
     ```
+
 2. **Install Dependencies**
 
     ```bash
@@ -30,11 +33,11 @@ An AI-powered music assistant that creates personalized Spotify playlists using 
     cp sample.env .env
     ```
 
-4. **Get the required API keys**
+4. **Get the required API keys and paste them into your .env file**
 
     - [Groq API Key](https://console.groq.com/keys)
     - [Spotify API Key](https://developer.spotify.com/dashboard)
-        - Add "https://google.com/" as redirect URI
+        - Set https://google.com/ as the Redirect URI in your Spotify app settings.
     - [LangSmith API Key](https://smith.langchain.com/)
 
 5. **Authorize Spotify access**
@@ -69,4 +72,25 @@ An AI-powered music assistant that creates personalized Spotify playlists using 
 
 ---
 
+### Now test AI Agent over websocket
 
+![Websocket Test](/img/websocket_test.png "Image showing test run of the agent over websocket connection")
+
+1. In **main.py**, uncomment the WebSocket section and comment out the terminal section.
+
+2. Then run
+
+    ```bash
+    python main.py
+    ```
+
+3. Now go to [Hoppscotch](https://hoppscotch.io/realtime/websocket)
+
+4. Add **ws://localhost:8000/chat** in the URL field and click the **Connect** button
+
+5. To send message, go to communication field and enter the message in below format
+    ```
+    {
+        "message": "<Your message>"
+    }   
+    ```
